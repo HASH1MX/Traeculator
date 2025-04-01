@@ -286,6 +286,23 @@ const deleteButton = document.querySelector('[data-delete]');
 const allClearButton = document.querySelector('[data-all-clear]');
 const percentButton = document.querySelector('[data-percent]');
 const decimalButton = document.querySelector('[data-decimal]');
+const allButtons = document.querySelectorAll('button');
+
+// Animation function for button press
+function animateButtonPress(button) {
+    button.classList.add('button-active');
+    setTimeout(() => {
+        button.classList.remove('button-active');
+    }, 300);
+}
+
+// Animation function for calculation result
+function animateResult() {
+    currentOperandElement.classList.add('result-animation');
+    setTimeout(() => {
+        currentOperandElement.classList.remove('result-animation');
+    }, 500);
+}
 
 // Initialize calculator
 const calculator = new Calculator(previousOperandElement, currentOperandElement);
@@ -293,6 +310,7 @@ const calculator = new Calculator(previousOperandElement, currentOperandElement)
 // Event Listeners
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
+        animateButtonPress(button);
         calculator.appendNumber(button.innerText);
         calculator.updateDisplay();
     });
@@ -300,6 +318,7 @@ numberButtons.forEach(button => {
 
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
+        animateButtonPress(button);
         calculator.chooseOperation(button.innerText);
         calculator.updateDisplay();
     });
@@ -307,59 +326,119 @@ operationButtons.forEach(button => {
 
 functionButtons.forEach(button => {
     button.addEventListener('click', () => {
+        animateButtonPress(button);
         calculator.calculateFunction(button.dataset.function);
         calculator.updateDisplay();
+        animateResult();
     });
 });
 
 equalsButton.addEventListener('click', () => {
+    animateButtonPress(equalsButton);
     calculator.compute();
     calculator.updateDisplay();
+    animateResult();
 });
 
 allClearButton.addEventListener('click', () => {
+    animateButtonPress(allClearButton);
     calculator.clear();
     calculator.updateDisplay();
 });
 
 deleteButton.addEventListener('click', () => {
+    animateButtonPress(deleteButton);
     calculator.delete();
     calculator.updateDisplay();
 });
 
 percentButton.addEventListener('click', () => {
+    animateButtonPress(percentButton);
     calculator.calculatePercent();
     calculator.updateDisplay();
+    animateResult();
 });
 
 decimalButton.addEventListener('click', () => {
+    animateButtonPress(decimalButton);
     calculator.appendNumber('.');
     calculator.updateDisplay();
 });
 
+// Add hover sound effect (subtle feedback)
+allButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+        button.style.transition = 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    });
+});
+
 // Keyboard support
 document.addEventListener('keydown', event => {
+    // Find the corresponding button for animation
+    let buttonToAnimate = null;
+    
     if (/[0-9]/.test(event.key)) {
         calculator.appendNumber(event.key);
+        buttonToAnimate = Array.from(numberButtons).find(btn => btn.textContent === event.key);
     } else if (event.key === '.') {
         calculator.appendNumber('.');
+        buttonToAnimate = decimalButton;
     } else if (event.key === '+' || event.key === '-') {
         calculator.chooseOperation(event.key);
+        buttonToAnimate = Array.from(operationButtons).find(btn => btn.textContent === event.key);
     } else if (event.key === '*') {
         calculator.chooseOperation('×');
+        buttonToAnimate = Array.from(operationButtons).find(btn => btn.textContent === '×');
     } else if (event.key === '/') {
         calculator.chooseOperation('÷');
+        buttonToAnimate = Array.from(operationButtons).find(btn => btn.textContent === '÷');
     } else if (event.key === 'Enter' || event.key === '=') {
         event.preventDefault();
         calculator.compute();
+        buttonToAnimate = equalsButton;
+        animateResult();
     } else if (event.key === 'Escape') {
         calculator.clear();
+        buttonToAnimate = allClearButton;
     } else if (event.key === 'Backspace') {
         calculator.delete();
+        buttonToAnimate = deleteButton;
     } else if (event.key === '%') {
         calculator.calculatePercent();
+        buttonToAnimate = percentButton;
+        animateResult();
     }
+    
+    // Animate the corresponding button if found
+    if (buttonToAnimate) {
+        animateButtonPress(buttonToAnimate);
+    }
+    
     calculator.updateDisplay();
+});
+
+// Theme toggle functionality
+const themeSwitch = document.getElementById('theme-switch');
+
+// Check for saved theme preference or use device preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    themeSwitch.checked = true;
+} else if (savedTheme === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.body.classList.add('light-theme');
+    themeSwitch.checked = true;
+}
+
+// Theme switch event listener
+themeSwitch.addEventListener('change', () => {
+    if (themeSwitch.checked) {
+        document.body.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.body.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+    }
 });
 
 // Initialize display

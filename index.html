@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch" class="theme-switch">
+        <label for="theme-switch" class="theme-label">
+            <span class="theme-icon">🌙</span>
+            <span class="theme-icon">☀️</span>
+            <span class="slider"></span>
+        </label>
+    </div>
     <div class="calculator-container">
         <div class="calculator">
             <div class="calculator-display">
@@ -14,52 +22,43 @@
                 <div class="current-operand" id="current-operand">0</div>
             </div>
             <div class="calculator-buttons">
-                <!-- Trigonometry Functions Row -->
+                <!-- Combined Scientific Functions Row -->
                 <div class="scientific-functions">
                     <button class="function-btn" data-function="sin">sin</button>
                     <button class="function-btn" data-function="cos">cos</button>
                     <button class="function-btn" data-function="tan">tan</button>
                     <button class="function-btn" data-function="asin">sin<sup>-1</sup></button>
                     <button class="function-btn" data-function="acos">cos<sup>-1</sup></button>
-                </div>
-                <!-- Hyperbolic Functions Row -->
-                <div class="scientific-functions">
                     <button class="function-btn" data-function="atan">tan<sup>-1</sup></button>
                     <button class="function-btn" data-function="sinh">sinh</button>
                     <button class="function-btn" data-function="cosh">cosh</button>
                     <button class="function-btn" data-function="tanh">tanh</button>
                     <button class="function-btn" data-function="log2">log<sub>2</sub></button>
                 </div>
-                <!-- Logarithmic Functions Row -->
-                <div class="scientific-functions">
+                <!-- Combined Additional Functions Row -->
+                <div class="additional-functions">
                     <button class="function-btn" data-function="log">log</button>
                     <button class="function-btn" data-function="ln">ln</button>
                     <button class="function-btn" data-function="exp">e<sup>x</sup></button>
-                    <button class="function-btn" data-function="abs">|x|</button>
-                    <button class="function-btn" data-function="sign">sgn</button>
-                </div>
-                <!-- Algebraic Functions Row -->
-                <div class="additional-functions">
                     <button class="function-btn" data-function="sqrt">√</button>
                     <button class="function-btn" data-function="cbrt"><sup>3</sup>√</button>
                     <button class="function-btn" data-function="square">x<sup>2</sup></button>
                     <button class="function-btn" data-function="cube">x<sup>3</sup></button>
                     <button class="function-btn" data-function="power">x<sup>y</sup></button>
-                </div>
-                <!-- Calculus Functions Row -->
-                <div class="additional-functions">
                     <button class="function-btn" data-function="factorial">x!</button>
-                    <button class="function-btn" data-function="floor">⌊x⌋</button>
-                    <button class="function-btn" data-function="ceil">⌈x⌉</button>
-                    <button class="function-btn" data-function="round">round</button>
-                    <button class="function-btn" data-function="trunc">trunc</button>
+                    <button class="function-btn" data-function="abs">|x|</button>
                 </div>
-                <!-- Constants Row -->
+                <!-- Combined Constants and Other Functions Row -->
                 <div class="additional-functions">
                     <button class="function-btn" data-function="pi">π</button>
                     <button class="function-btn" data-function="e">e</button>
                     <button class="function-btn" data-function="phi">φ</button>
                     <button class="function-btn" data-function="mod">mod</button>
+                    <button class="function-btn" data-function="sign">sgn</button>
+                    <button class="function-btn" data-function="floor">⌊x⌋</button>
+                    <button class="function-btn" data-function="ceil">⌈x⌉</button>
+                    <button class="function-btn" data-function="round">round</button>
+                    <button class="function-btn" data-function="trunc">trunc</button>
                     <button class="function-btn" data-function="abs">|x|</button>
                 </div>
                 <!-- Main Calculator Grid -->
